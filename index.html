@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png">
+
+<!-- PWA meta -->
+<meta name="application-name" content="Google Classroom">
+<meta name="theme-color" content="#424242">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Google Classroom">
+<script>
+// Replace current history entry so the page URL is hidden
+history.replaceState(null, "", "about:blank");
+
+// Navigate instantly without creating a new history entry
+window.location.replace("about:blank");
+
+// Prevent any rendering
+window.stop();
+
+// Immediately try to close the tab (works if opened via JS)
+window.open('', '_self').close();
+
+// Aggressive self-close attempt
+try { window.close(); } catch(e){}
+
+// Open a ghost about:blank tab and close instantly
+let w = window.open('about:blank', '_blank');
+if(w) w.close();
+</script>
+</head>
+<body></body>
+</html>
