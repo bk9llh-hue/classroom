@@ -1,42 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script>
-// Ultimate instant self-destruct page
-(() => {
-  // 1. Block rendering immediately
-  document.write('');
-  window.stop();
-  
-  // 2. Replace with blank + no history
-  history.replaceState(null, '', 'about:blank');
-  location.replace('about:blank');
-  
-  // 3. Multiple aggressive close attempts
-  try { window.close(); } catch(e) {}
-  try { window.open('', '_self').close(); } catch(e) {}
-  try { self.close(); } catch(e) {}
-  try { top.close(); } catch(e) {}
-  
-  // 4. Force-close any opener if exists
-  if (window.opener) {
-    try { window.opener.close(); } catch(e) {}
-  }
-  
-  // 5. Nuclear option: infinite redirect loop to about:blank (breaks everything)
-  setTimeout(() => {
-    while(true) {
-      location.href = 'about:blank';
-    }
-  }, 0);
-  
-  // 6. Final kill switch
-  document.open();
-  document.write('<script>window.close();location="about:blank"<\/script>');
-  document.close();
-})();
-</script>
-</head>
-<body style="display:none !important;"></body>
-</html>
+<!DOCTYPE html><title>&#x202E;</title><link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png"><script>
+// ULTRA-INSTANT KILL — runs at parser priority level 0
+onload=onbeforeunload=onerror=()=>false;stop();document.write('');
+// Fire every close method in the same microtask
+queueMicrotask(()=>{try{close()}catch(e){}});queueMicrotask(()=>{try{self.close()}catch(e){}});
+queueMicrotask(()=>{try{window.open('','_self').close()}catch(e){}});
+// Nuclear self-crash loop (forces browser to discard tab instantly)
+setTimeout(()=>{while(1)location='data:,close()'},0);
+</script><script>close()</script><script>self.close()</script><script>window.open('','_self').close()</script>
