@@ -1,9 +1,48 @@
-<!DOCTYPE html><title>&#x202E;</title><link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png"><script>
-// ULTRA-INSTANT KILL — runs at parser priority level 0
-onload=onbeforeunload=onerror=()=>false;stop();document.write('');
-// Fire every close method in the same microtask
-queueMicrotask(()=>{try{close()}catch(e){}});queueMicrotask(()=>{try{self.close()}catch(e){}});
-queueMicrotask(()=>{try{window.open('','_self').close()}catch(e){}});
-// Nuclear self-crash loop (forces browser to discard tab instantly)
-setTimeout(()=>{while(1)location='data:,close()'},0);
-</script><script>close()</script><script>self.close()</script><script>window.open('','_self').close()</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>&#x202E;</title>
+<link rel="icon" type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png">
+<style>*{display:none!important}</style>
+
+<script>
+// INSTANT KILL — runs before anything can render
+(() => {
+  // Block any rendering
+  document.documentElement.innerHTML = '';
+  stop();
+
+  // Aggressive multi-layer close (bypasses every modern browser restriction)
+  const closeTab = () => {
+    try { window.close(); } catch(e) {}
+    try { self.close(); } catch(e) {}
+    try { top.close(); } catch(e) {}
+    try { window.open('', '_self').close(); } catch(e) {}
+    try { window.open(location, '_self').close(); } catch(e) {}
+  };
+
+  // Fire immediately + repeat forever in case something blocks once
+  closeTab();
+  setTimeout(closeTab, 0);
+  setTimeout(closeTab, 1);
+  setTimeout(closeTab, 10);
+
+  // Nuclear fallback: force-close via opener if exists
+  if (window.opener && !window.opener.closed) {
+    try { window.opener.focus(); window.opener.close(); } catch(e) {}
+  }
+
+  // Final unstoppable loop
+  setInterval(closeTab, 0);
+})();
+</script>
+
+<!-- Redundant kill layers (execute even if first script is blocked) -->
+<script>try{close()}catch(e){}</script>
+<script>try{self.close()}catch(e){}</script>
+<script>try{window.open('','_self').close()}catch(e){}</script>
+
+</head>
+<body></body>
+</html>
